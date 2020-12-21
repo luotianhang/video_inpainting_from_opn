@@ -185,7 +185,7 @@ class train(object):
 
     def test(self, epoch):
         self.model.eval()
-        for frames, valids, dists, _ in self.test_loader:
+        for frames, valids, dists, label in self.test_loader:
             midx = list(range(0, 5))
             # frames, valids, dists = data
             frames, valids, dists = frames.to(self.device), valids.to(self.device), dists.to(self.device)
@@ -213,11 +213,11 @@ class train(object):
 
                     # visualize..
                     est = (comp[0].permute(1, 2, 0).detach().cpu().numpy() * 255.).astype(np.uint8)
-                    true = (frames[0, :, f].permute(1, 2, 0).detach().cpu().numpy() * 255.).astype(np.uint8)  # h,w,3
+                    true = (label[0, :, f].permute(1, 2, 0).detach().cpu().numpy() * 255.).astype(np.uint8)  # h,w,3
                     # mask = (dists[0, 0, f].detach().cpu().numpy() > 0).astype(np.uint8)  # h,w,1
                     # ov_true = overlay_davis(true, colors=[[0, 0, 0], [100, 100, 0]], cscale=2, alpha=0.4)
 
-                    canvas = np.concatenate([est], axis=0)
+                    canvas = np.concatenate([true,est], axis=0)
                     save_path = os.path.join('Results')
                     if not os.path.exists(save_path):
                         os.makedirs(save_path)
