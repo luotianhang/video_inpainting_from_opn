@@ -106,6 +106,7 @@ class Decoder(nn.Module):
                                  activation=nn.LeakyReLU(negative_slope=0.2))  # 2
         self.conv21 = GatedConv2d(64, 3, kernel_size=5, stride=1, padding=2, activation=None)  # 1
 
+
         self.register_buffer('mean', torch.FloatTensor([0.485, 0.456, 0.406]).view(1, 3, 1, 1))
         self.register_buffer('std', torch.FloatTensor([0.229, 0.224, 0.225]).view(1, 3, 1, 1))
 

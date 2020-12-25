@@ -82,7 +82,7 @@ class L1_Loss(nn.Module):
                 loss += torch.sum(torch.abs(x - y) * pv[:, i, :, :])
             return loss
         else:
-            loss = torch.sum(torch.abs(x - y) * pv)
+            loss = torch.sum(torch.abs(x - y) * pv)/(y.shape(0)*y.shape(1)*y.shape(2))
             return loss
 
 class L1_Lossv2(nn.Module):
@@ -103,7 +103,7 @@ class L1_Lossv2(nn.Module):
 def L1(x,y,mask):
     res=torch.abs(x-y)
     res=res*mask
-    return torch.sum(res)
+    return torch.sum(res)/(y.shape(0)*y.shape(1)*y.shape(2))
 
 def ll1(x,y):
     return torch.sum(x-y)
